@@ -1,4 +1,4 @@
-### Demostration of LLM Agent with MCP
+### Demonstration of LLM Agent with MCP
 
 https://openai.github.io/openai-agents-python/mcp/
 
