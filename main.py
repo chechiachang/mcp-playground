@@ -33,6 +33,13 @@ class OpenAIAgent:
                         env={"FIRECRAWL_API_KEY": os.getenv("FIRECRAWL_API_KEY", "")},
                     ),
                 ),
+                # https://github.com/narumiruna/ly-mcp
+                MCPServerStdio(
+                    params=MCPServerStdioParams(
+                        command="uvx",
+                        args=["--from", "git+https://github.com/narumiruna/ly-mcp", "lymcp"],
+                    ),
+                ),
             ],
         )
         self.messages: list[TResponseInputItem] = []
