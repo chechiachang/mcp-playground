@@ -1,0 +1,48 @@
+[project]
+name = "mcp-playground"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "agentize[langfuse]>=0.0.19",
+    "chainlit>=2.6.5",
+    "dotenv>=0.9.9",
+    "loguru>=0.7.3",
+    "openai-agents>=0.2.4",
+]
+
+[tool.ruff]
+exclude = ["build"]
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    "B",   # flake8-bugbear
+    "C",   # flake8-comprehensions
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "I",   # isort
+    "N",   # pep8-naming
+    "SIM", # flake8-simplify
+    "UP",  # pyupgrade
+    "W",   # pycodestyle warnings
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401", "F403"]
+
+[tool.ruff.lint.isort]
+force-single-line = true
+
+[tool.pytest.ini_options]
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.bumpversion]
+current_version = "0.0.19"
+tag = true
+commit = true
+pre_commit_hooks = ["uv lock", "git add uv.lock"]
