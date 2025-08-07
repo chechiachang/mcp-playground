@@ -21,24 +21,33 @@ class OpenAIAgent:
             instructions="You are a helpful assistant.",
             model=get_openai_model(),
             mcp_servers=[
-                # https://github.com/narumiruna/ly-mcp/tree/main
+                # https://github.com/narumiruna/yfinance-mcp
                 MCPServerStdio(
-                    params=MCPServerStdioParams(command="docker", args=["run", "-i", "--rm", "narumi/yfinance-mcp"]),
+                    name="yfinance-mcp",
+                    params=MCPServerStdioParams(
+                        command="uvx",
+                        args=["--from", "git+https://github.com/narumiruna/yfinance-mcp", "yfmcp"],
+                    ),
+                    client_session_timeout_seconds=20
                 ),
                 # https://github.com/mendableai/firecrawl-mcp-server
                 MCPServerStdio(
+                    name="firecrawl-mcp",
                     params=MCPServerStdioParams(
                         command="npx",
                         args=["-y", "firecrawl-mcp"],
                         env={"FIRECRAWL_API_KEY": os.getenv("FIRECRAWL_API_KEY", "")},
                     ),
+                    client_session_timeout_seconds=20
                 ),
                 # https://github.com/narumiruna/ly-mcp
                 MCPServerStdio(
+                    name="ly-mcp",
                     params=MCPServerStdioParams(
                         command="uvx",
                         args=["--from", "git+https://github.com/narumiruna/ly-mcp", "lymcp"],
                     ),
+                    client_session_timeout_seconds=20
                 ),
             ],
         )
