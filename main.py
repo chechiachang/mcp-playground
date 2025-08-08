@@ -1,6 +1,5 @@
 # https://github.com/agentika/agentize/blob/main/examples/mcp_chatbot.py
 import os
-from functools import cache
 
 import chainlit as cl
 from agentize.model import get_openai_model
@@ -8,6 +7,7 @@ from agentize.utils import configure_langfuse
 from agents import Agent
 from agents import Runner
 from agents import TResponseInputItem
+from agents import set_tracing_disabled
 from agents.mcp import MCPServerStdio
 from agents.mcp import MCPServerStdioParams
 from dotenv import find_dotenv
@@ -17,29 +17,40 @@ from loguru import logger
 
 class OpenAIAgent:
     def __init__(self) -> None:
+        load_dotenv(find_dotenv(), override=True)
+        configure_langfuse()
         self.agent = Agent(
             name="agent",
             instructions="You are a helpful assistant.",
             model=get_openai_model(),
             mcp_servers=[
-                # https://github.com/narumiruna/ly-mcp/tree/main
+                # https://github.com/narumiruna/yfinance-mcp
                 MCPServerStdio(
-                    params=MCPServerStdioParams(command="docker", args=["run", "-i", "--rm", "narumi/yfinance-mcp"]),
+                    name="yfinance-mcp",
+                    params=MCPServerStdioParams(
+                        command="uvx",
+                        args=["--from", "git+https://github.com/narumiruna/yfinance-mcp", "yfmcp"],
+                    ),
+                    client_session_timeout_seconds=20
                 ),
                 # https://github.com/mendableai/firecrawl-mcp-server
                 MCPServerStdio(
+                    name="firecrawl-mcp",
                     params=MCPServerStdioParams(
                         command="npx",
                         args=["-y", "firecrawl-mcp"],
                         env={"FIRECRAWL_API_KEY": os.getenv("FIRECRAWL_API_KEY", "")},
                     ),
+                    client_session_timeout_seconds=20
                 ),
                 # https://github.com/narumiruna/ly-mcp
                 MCPServerStdio(
+                    name="ly-mcp",
                     params=MCPServerStdioParams(
                         command="uvx",
                         args=["--from", "git+https://github.com/narumiruna/ly-mcp", "lymcp"],
                     ),
+                    client_session_timeout_seconds=20
                 ),
             ],
         )
@@ -68,28 +79,21 @@ class OpenAIAgent:
 
         return str(result.final_output)
 
-
-@cache
-def get_agent() -> OpenAIAgent:
-    load_dotenv(find_dotenv(), override=True)
-    configure_langfuse()
-    return OpenAIAgent()
-
-
 @cl.on_app_startup
 async def connect() -> None:
-    agent = get_agent()
-    await agent.connect()
+    await openai_agent.connect()
 
 
 @cl.on_app_shutdown
 async def cleanup() -> None:
-    agent = get_agent()
-    await agent.cleanup()
+    await openai_agent.cleanup()
 
 
 @cl.on_message
 async def chat(message: cl.Message) -> None:
-    agent = get_agent()
-    content = await agent.run(message.content)
+    content = await openai_agent.run(message.content)
     await cl.Message(content=content).send()
+
+# main
+set_tracing_disabled(True)
+openai_agent = OpenAIAgent()
