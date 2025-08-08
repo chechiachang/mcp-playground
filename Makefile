@@ -13,8 +13,11 @@ type:
 #test:
 #	uv run pytest -v -s --cov=src tests
 
-publish:
-	uv build -f wheel
-	uv publish
+#publish:
+#	uv build -f wheel
+#	uv publish
+
+run:
+	uv run chainlit run main.py
 
 .PHONY: format lint fix type test publish
