@@ -137,5 +137,5 @@ async def set_starters():
     ]
 
 # main
-set_tracing_disabled(True)
+#set_tracing_disabled(True)
 openai_agent = OpenAIAgent()
