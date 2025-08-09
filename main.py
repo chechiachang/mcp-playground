@@ -14,6 +14,8 @@ from dotenv import find_dotenv
 from dotenv import load_dotenv
 from loguru import logger
 
+from starter import set_starters
+
 
 class OpenAIAgent:
     def __init__(self) -> None:
