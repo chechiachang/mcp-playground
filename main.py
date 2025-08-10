@@ -7,7 +7,6 @@ from agentize.utils import configure_langfuse
 from agents import Agent
 from agents import Runner
 from agents import TResponseInputItem
-from agents import set_tracing_disabled
 from agents.mcp import MCPServerStdio
 from agents.mcp import MCPServerStdioParams
 from dotenv import find_dotenv
