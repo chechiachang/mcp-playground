@@ -93,15 +93,6 @@ async def chat(message: cl.Message) -> None:
     content = await openai_agent.run(message.content)
     await cl.Message(content=content).send()
 
-#@cl.password_auth_callback
-#def auth_callback(username: str, password: str):
-#    if (username, password) == ("coscup", "coscup"):
-#        return cl.User(
-#            identifier="user", metadata={"role": "user", "provider": "credentials"}
-#        )
-#    else:
-#        return None
-
 @cl.set_starters
 async def set_starters():
     return [
