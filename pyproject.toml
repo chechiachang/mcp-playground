@@ -1,11 +1,11 @@
 [project]
 name = "mcp-playground"
-version = "0.1.0"
+version = "0.2.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 dependencies = [
-    "agentize[langfuse]>=0.0.19",
+    "agentize[langfuse]>=0.1.0",
     "chainlit>=2.6.5",
     "dotenv>=0.9.9",
     "loguru>=0.7.3",
@@ -46,6 +46,3 @@ current_version = "0.1.0"
 tag = true
 commit = true
 pre_commit_hooks = ["uv lock", "git add uv.lock"]
-
-[tool.uv.sources]
-agentize = { git = "https://github.com/agentika/agentize", branch = "feat/support-python-311" }
