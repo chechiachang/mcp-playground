@@ -9,8 +9,8 @@ resolution-markers = [
 
 [[package]]
 name = "agentize"
-version = "0.0.19"
-source = { registry = "https://pypi.org/simple" }
+version = "0.1.0"
+source = { git = "https://github.com/agentika/agentize?branch=feat%2Fsupport-python-311#bc8d29541878afa183af0af4c3f9c44f42cb5f0e" }
 dependencies = [
     { name = "aiolimiter" },
     { name = "boto3" },
@@ -23,9 +23,6 @@ dependencies = [
     { name = "ua-generator" },
     { name = "wisest" },
     { name = "your-telegraph" },
-]
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/0e/23/d851a8f37e6edd6b0e07ff30af3d880b47aca662bad72bc4875a3f599a8b/agentize-0.0.19-py3-none-any.whl", hash = "sha256:6b5c960184800d390fedc3b4be53e4ac3814eb92548ceb84ae7804c4590b5295", size = 19736, upload-time = "2025-05-22T16:56:03.389Z" },
 ]
 
 [package.optional-dependencies]
@@ -1052,7 +1049,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "agentize", extras = ["langfuse"], specifier = ">=0.0.19" },
+    { name = "agentize", extras = ["langfuse"], git = "https://github.com/agentika/agentize?branch=feat%2Fsupport-python-311" },
     { name = "chainlit", specifier = ">=2.6.5" },
     { name = "dotenv", specifier = ">=0.9.9" },
     { name = "loguru", specifier = ">=0.7.3" },
@@ -2695,19 +2692,15 @@ wheels = [
 
 [[package]]
 name = "wisest"
-version = "0.14.1"
-source = { registry = "https://pypi.org/simple" }
+version = "0.15.0"
+source = { git = "https://github.com/chechiachang/wisest?branch=feat%2Fsupport-python-311#0a486a833431e0e93d6c2378a8584ebe3f61a1b1" }
 dependencies = [
     { name = "aiolimiter" },
     { name = "httpx" },
     { name = "pydantic" },
     { name = "rich" },
     { name = "tabulate" },
-    { name = "tqdm" },
     { name = "typer" },
-]
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/09/f7/cf506789c5aac87ef579e6eb63769a40da2478518fb48a6c70dcb4d1ac07/wisest-0.14.1-py3-none-any.whl", hash = "sha256:01ede2589a0ec63feeaa26ae548c400188c383a925d09bda71694b7ce40e4bfe", size = 7820, upload-time = "2025-05-06T13:37:37.935Z" },
 ]
 
 [[package]]

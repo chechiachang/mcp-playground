@@ -46,3 +46,6 @@ current_version = "0.1.0"
 tag = true
 commit = true
 pre_commit_hooks = ["uv lock", "git add uv.lock"]
+
+[tool.uv.sources]
+agentize = { git = "https://github.com/agentika/agentize", branch = "feat/support-python-311" }
