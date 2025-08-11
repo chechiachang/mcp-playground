@@ -30,6 +30,16 @@ AZURE_OPENAI_ENDPOINT=
 OPENAI_MODEL= gpt-4.1-mini
 ```
 
+Or if you are using the OpenAI SDK Compatible API (ex. Gemini API), use the following configuration:
+
+```
+OPENAI_API_KEY=<your-google-api-key>
+OPENAI_BASE_URL="https://generativelanguage.googleapis.com/v1beta/openai/"
+OPENAI_MODEL="gemini-2.0-flash"
+API_TYPE="chat_completions"
+OPENAI_AGENTS_DISABLE_TRACING=1 # (Optional) Disable tracing provided by the OpenAI SDK
+```
+
 ##### (Optional) Firecrawl Configuration
 
 ```
