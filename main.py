@@ -21,7 +21,7 @@ class OpenAIAgent:
         self.agent = Agent(
             name="agent",
             instructions="You are a helpful assistant.",
-            model=get_openai_model(),
+            model=get_openai_model(api_type=os.getenv("API_TYPE", "responses")),
             mcp_servers=[
                 # https://github.com/narumiruna/yfinance-mcp
                 MCPServerStdio(
@@ -30,7 +30,7 @@ class OpenAIAgent:
                         command="uvx",
                         args=["--from", "git+https://github.com/narumiruna/yfinance-mcp", "yfmcp"],
                     ),
-                    client_session_timeout_seconds=20
+                    client_session_timeout_seconds=20,
                 ),
                 # https://github.com/mendableai/firecrawl-mcp-server
                 MCPServerStdio(
@@ -40,7 +40,7 @@ class OpenAIAgent:
                         args=["-y", "firecrawl-mcp"],
                         env={"FIRECRAWL_API_KEY": os.getenv("FIRECRAWL_API_KEY", "")},
                     ),
-                    client_session_timeout_seconds=20
+                    client_session_timeout_seconds=20,
                 ),
                 # https://github.com/narumiruna/ly-mcp
                 MCPServerStdio(
@@ -49,7 +49,7 @@ class OpenAIAgent:
                         command="uvx",
                         args=["--from", "git+https://github.com/narumiruna/ly-mcp", "lymcp"],
                     ),
-                    client_session_timeout_seconds=20
+                    client_session_timeout_seconds=20,
                 ),
             ],
         )
@@ -78,6 +78,7 @@ class OpenAIAgent:
 
         return str(result.final_output)
 
+
 @cl.on_app_startup
 async def connect() -> None:
     await openai_agent.connect()
@@ -92,6 +93,7 @@ async def cleanup() -> None:
 async def chat(message: cl.Message) -> None:
     content = await openai_agent.run(message.content)
     await cl.Message(content=content).send()
+
 
 @cl.set_starters
 async def set_starters():
@@ -117,15 +119,16 @@ async def set_starters():
         cl.Starter(
             label="立法院 mcp api 查詢",
             message="使用立法院 mcp api 查詢法案資料，列出前五筆。輸出格式 markdown：###法案列表 1. 2. 3. 4. 5.",
-            icon="https://upload.wikimedia.org/wikipedia/commons/8/84/ROC_Legislative_Yuan_Seal.svg"
+            icon="https://upload.wikimedia.org/wikipedia/commons/8/84/ROC_Legislative_Yuan_Seal.svg",
         ),
         cl.Starter(
             label="列出立法院 mcp 可用的 tool",
             message="列出立法院 mcp 可用的 tool",
-            icon="https://upload.wikimedia.org/wikipedia/commons/8/84/ROC_Legislative_Yuan_Seal.svg"
-        )
+            icon="https://upload.wikimedia.org/wikipedia/commons/8/84/ROC_Legislative_Yuan_Seal.svg",
+        ),
     ]
 
+
 # main
-#set_tracing_disabled(True)
+# set_tracing_disabled(True)
 openai_agent = OpenAIAgent()
